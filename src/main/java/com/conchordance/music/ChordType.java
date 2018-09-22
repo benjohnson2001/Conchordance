@@ -10,6 +10,8 @@ package com.conchordance.music;
 public class ChordType {
 	
 	public static final ChordType MAJOR = new ChordType("M", new Interval[]{Interval.UNISON, Interval.MAJOR_THIRD, Interval.PERFECT_FIFTH});
+	public static final ChordType OCTAVE = new ChordType("octave", new Interval[]{Interval.UNISON});
+	public static final ChordType MINORTHIRD = new ChordType("m", new Interval[]{Interval.UNISON, Interval.MINOR_THIRD});
 
 	/**
 	 * The name of the chord type (i.e. maj, min, etc)

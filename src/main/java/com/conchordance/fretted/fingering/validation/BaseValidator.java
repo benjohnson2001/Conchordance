@@ -13,7 +13,7 @@ import com.conchordance.music.Note;
  */
 public class BaseValidator implements ChordFingeringValidator {
 	public boolean validate(ChordFingering candidate, Chord compareTo) {
-		if (candidate.sortedNotes.length <= 3)
+		if (candidate.sortedNotes.length < 2)
 			return false;
 		
 		for (Note i : compareTo.notes) {

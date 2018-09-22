@@ -119,7 +119,7 @@ public class ChordFingering implements Cloneable {
 	}
 	
 	public String toString() {
-		return chord.toString() + "{" + Arrays.toString(absoluteFrets) + "}";		
+		return Arrays.toString(absoluteFrets);
 	}
 	
 	/**
