@@ -70,7 +70,12 @@ public class RunNormalChord {
 
       String chordName = name + chordType.name;
 
+      if (!chordName.equals("D5")) {
+         return;
+      }
+
       for (int i = 0; i < currentSetOfChords.size(); i++) {
+//      for (int i = 3; i < 4; i++) {
          System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
       }
    }
@@ -80,7 +85,6 @@ public class RunNormalChord {
       List<ChordFingering> chordFingerings = new RecursiveChordFingeringGenerator().getChordFingerings(fretboardModel);
       ChordListModel chords = new ChordListModel();
       chords.setComparator(new ChordFingeringComparator.ShapeComparator());
-      chords.setValidator(new StrummableValidator());
       chords.setChords(chordFingerings.toArray(new ChordFingering[chordFingerings.size()]));
 
       List<ChordFingering> currentSetOfChords = new ArrayList<>();
@@ -99,7 +103,8 @@ public class RunNormalChord {
             if (
                   Util.numberOfStringsPlayed(frets) == i &&
                         ChordChecker.isNotBrokenSetChord(frets) &&
-                        ChordChecker.isNotChordWithOpenStringOutOfPlace(frets)) {
+                        ChordChecker.isNotChordWithOpenStringOutOfPlace(frets)
+                  ) {
 
                currentSetOfChords.add(chordFingering);
             }

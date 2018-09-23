@@ -182,12 +182,12 @@ public class RecursiveChordFingeringGenerator implements ChordFingeringGenerator
          // Cannot stretch more than two or three frets
          if (latestFinger.fret > 7) {
 
-            if (current.fret - latestFinger.fret > 3) {
+            if (current.fret - latestFinger.fret > 4) {
                continue;
             }
          } else {
 
-            if (current.fret - latestFinger.fret > 2) {
+            if (current.fret - latestFinger.fret > 3) {
                continue;
             }
          }
