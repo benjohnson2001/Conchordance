@@ -1,4 +1,4 @@
-package com.conchordance.run;
+package com.conchordance.run.chordcheckers;
 
 import org.apache.commons.lang3.ArrayUtils;
 

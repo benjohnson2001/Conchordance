@@ -1,6 +1,7 @@
-package com.conchordance.run;
+package com.conchordance.run.chordcheckers;
 
 import com.conchordance.fretted.fingering.ChordFingering;
+import com.conchordance.run.Util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +49,7 @@ public class ChordDuplicateChecker {
                break;
             }
 
-            if (i == Util.numberOfStringsPlayed(fretsOfPotentialChord)-1) {
+            if (i == (6-Util.numberOfStringsPlayed(fretsOfPotentialChord))) {
                return true;
             }
          }

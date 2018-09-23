@@ -2,17 +2,12 @@ package com.conchordance.music;
 
 public enum NoteName {
     C("C", 0),
-    CSHARP("C#", 1),
     D("D", 2),
-    DSHARP("D#", 3),
-    E("C", 4),
-    F("C", 5),
-    FSHARP("C", 6),
-    G("C", 7),
-    GSHARP("C", 8),
-    A("C", 9),
-    ASHARP("C", 10),
-    B("C", 11);
+    E("E", 4),
+    F("F", 5),
+    G("G", 7),
+    A("A", 9),
+    B("B", 11);
 
     static NoteName fromChar(char c) {
         switch(c) {

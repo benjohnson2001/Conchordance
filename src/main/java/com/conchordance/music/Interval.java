@@ -9,10 +9,14 @@ public class Interval {
 	private static final int[] intervalsToHalfSteps = {0, 2, 4, 5, 7, 9, 11};
 
 	public static final Interval UNISON = new Interval(0, 0);
+	public static final Interval SECOND = new Interval(1, 0);
 	public static final Interval MINOR_THIRD = new Interval(2, -1);
 	public static final Interval MAJOR_THIRD = new Interval(2, 0);
+	public static final Interval FOURTH = new Interval(3, 0);
 	public static final Interval DIMINISHED_FIFTH = new Interval(4, -1);
 	public static final Interval PERFECT_FIFTH = new Interval(4, 0);
+	public static final Interval AUGMENTED_FIFTH = new Interval(4, 1);
+	public static final Interval SIXTH = new Interval(5, 0);
 	public static final Interval MINOR_SEVENTH = new Interval(6, -1);
 	public static final Interval MAJOR_SEVENTH = new Interval(6, 0);
 	public static final Interval[] MAJOR_INTERVALS = {UNISON, MAJOR_THIRD, PERFECT_FIFTH};

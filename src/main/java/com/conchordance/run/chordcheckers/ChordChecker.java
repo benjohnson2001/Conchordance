@@ -1,4 +1,4 @@
-package com.conchordance.run;
+package com.conchordance.run.chordcheckers;
 
 public class ChordChecker {
 

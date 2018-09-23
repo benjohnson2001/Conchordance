@@ -1,7 +1,10 @@
 package com.conchordance.music;
 
 import java.util.HashMap;
+
 import static com.conchordance.music.NoteName.*;
+import static com.conchordance.music.NoteName.A;
+import static com.conchordance.music.NoteName.G;
 
 public class Scale {
 	
