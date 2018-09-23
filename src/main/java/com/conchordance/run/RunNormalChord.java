@@ -48,7 +48,7 @@ public class RunNormalChord {
                noteName.toString().equals("A")) {
 
             for (ChordType chordType : chordTypes) {
-               printChords(noteName, 0, chordType);
+               printChords(noteName, 1, chordType);
             }
          }
       }
@@ -63,8 +63,15 @@ public class RunNormalChord {
       sortChordsByFretPosition(currentSetOfChords);
 //      List<ChordFingering> curatedChords = getDeduplicatedSetOfChords(currentSetOfChords);
 
+      String name = noteName.toString();
+      if (modifier == 1) {
+         name += "#";
+      }
+
+      String chordName = name + chordType.name;
+
       for (int i = 0; i < currentSetOfChords.size(); i++) {
-         System.out.println("[\"" + chordType.name + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
+         System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
       }
    }
 

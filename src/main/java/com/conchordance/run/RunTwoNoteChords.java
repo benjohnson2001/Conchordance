@@ -87,6 +87,10 @@ public class RunTwoNoteChords {
                chordName = ChordName.getMinorSeventhChordName(noteName, modifier);
             }
 
+//            if (chordNumber > 3) {
+//               continue;
+//            }
+
             System.out.println("[\"" + chordName + "\"," + chordNumber + "," + chordFingering + "],");
             chordNumber++;
          }

@@ -32,7 +32,7 @@ public class ChordType {
 	public static final ChordType MAJORSIXTH = new ChordType("6", new Interval[]{Interval.UNISON, Interval.MAJOR_THIRD, Interval.PERFECT_FIFTH, Interval.SIXTH});
 	public static final ChordType MINORSIXTH = new ChordType("m6", new Interval[]{Interval.UNISON, Interval.MINOR_THIRD, Interval.PERFECT_FIFTH, Interval.SIXTH});
 	public static final ChordType DOMINANTSEVENTH = new ChordType("7", new Interval[]{Interval.UNISON, Interval.MAJOR_THIRD, Interval.PERFECT_FIFTH, Interval.MINOR_SEVENTH});
-	public static final ChordType MAJORSEVENTH = new ChordType("maj7", new Interval[]{Interval.UNISON, Interval.MAJOR_THIRD, Interval.PERFECT_FIFTH, Interval.MAJOR_SEVENTH});
+	public static final ChordType MAJORSEVENTH = new ChordType("M7", new Interval[]{Interval.UNISON, Interval.MAJOR_THIRD, Interval.PERFECT_FIFTH, Interval.MAJOR_SEVENTH});
 	public static final ChordType MINORSEVENTH = new ChordType("m7", new Interval[]{Interval.UNISON, Interval.MINOR_THIRD, Interval.PERFECT_FIFTH, Interval.MINOR_SEVENTH});
 
 	/**
