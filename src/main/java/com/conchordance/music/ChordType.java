@@ -15,7 +15,7 @@ public class ChordType {
 	public static final ChordType MAJORTHIRDINTERVAL = new ChordType("Maddb9", new Interval[]{Interval.UNISON, Interval.MAJOR_THIRD});
 	public static final ChordType FOURTHINTERVAL = new ChordType("M7sus4", new Interval[]{Interval.UNISON, Interval.FOURTH});
 	public static final ChordType FLATFIFTHINTERVAL = new ChordType("5-", new Interval[]{Interval.UNISON, Interval.DIMINISHED_FIFTH});
-	public static final ChordType FIFTHINTERVAL = new ChordType("5", new Interval[]{Interval.UNISON, Interval.PERFECT_FIFTH});
+	public static final ChordType FIFTHINTERVAL = new ChordType("fifth", new Interval[]{Interval.UNISON, Interval.PERFECT_FIFTH});
 	public static final ChordType SIXTHINTERVAL = new ChordType("sixth", new Interval[]{Interval.UNISON, Interval.SIXTH});
 	public static final ChordType MINORSEVENTHINTERVAL = new ChordType("minorseventh", new Interval[]{Interval.UNISON, Interval.MINOR_SEVENTH});
 	public static final ChordType MAJORSEVENTHINTERVAL = new ChordType("mM7", new Interval[]{Interval.UNISON, Interval.MAJOR_SEVENTH});

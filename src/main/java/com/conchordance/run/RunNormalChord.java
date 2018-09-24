@@ -60,7 +60,7 @@ public class RunNormalChord {
       FretboardModel fretboardModel = new FretboardModel(Instrument.TELE, chord);
 
       List<ChordFingering> currentSetOfChords = getCurrentSetOfChords(fretboardModel);
-      sortChordsByFretPosition(currentSetOfChords);
+//      sortChordsByFretPosition(currentSetOfChords);
 //      List<ChordFingering> curatedChords = getDeduplicatedSetOfChords(currentSetOfChords);
 
       String name = noteName.toString();
@@ -70,12 +70,16 @@ public class RunNormalChord {
 
       String chordName = name + chordType.name;
 
-      if (!chordName.equals("D5")) {
-         return;
-      }
+//      if (!chordName.equals("FM")) {
+//         return;
+//      }
+//
+//      if (currentSetOfChords.size() == 11) {
+//         System.out.println(chordName);
+//      }
 
       for (int i = 0; i < currentSetOfChords.size(); i++) {
-//      for (int i = 3; i < 4; i++) {
+//      for (int i = 10; i < 11; i++) {
          System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
       }
    }
@@ -84,7 +88,7 @@ public class RunNormalChord {
 
       List<ChordFingering> chordFingerings = new RecursiveChordFingeringGenerator().getChordFingerings(fretboardModel);
       ChordListModel chords = new ChordListModel();
-      chords.setComparator(new ChordFingeringComparator.ShapeComparator());
+      chords.setComparator(new CustomComparator());
       chords.setChords(chordFingerings.toArray(new ChordFingering[chordFingerings.size()]));
 
       List<ChordFingering> currentSetOfChords = new ArrayList<>();
@@ -147,24 +151,39 @@ public class RunNormalChord {
 //      });
 //   }
 //
-   private static void sortChordsByFretPosition(List<ChordFingering> chords) {
-
-      Collections.sort(chords, new Comparator<ChordFingering>() {
-         @Override
-         public int compare(ChordFingering o1, ChordFingering o2) {
-
-            if (o1.position < o2.position) {
-               return -1;
-            } else if (o1.position > o2.position) {
-               return 1;
-            }
-
-            if (Util.numberOfStringsPlayed(o1.absoluteFrets) > Util.numberOfStringsPlayed(o2.absoluteFrets)) {
-               return 1;
-            } else {
-               return -1;
-            }
-         }
-      });
-   }
+//   private static void sortChordsByFretPosition(List<ChordFingering> chords) {
+//
+//      Collections.sort(chords, new Comparator<ChordFingering>() {
+//         @Override
+//         public int compare(ChordFingering o1, ChordFingering o2) {
+//
+//            if (o1.position < o2.position) {
+//               return -1;
+//            } else if (o1.position > o2.position) {
+//               return 1;
+//            }
+//
+//            if (Util.numberOfStringsPlayed(o1.absoluteFrets) > Util.numberOfStringsPlayed(o2.absoluteFrets)) {
+//               return 1;
+//            } else if (Util.numberOfStringsPlayed(o1.absoluteFrets) < Util.numberOfStringsPlayed(o2.absoluteFrets)) {
+//               return -1;
+//            }
+//
+//            for (int fret = o1.position; fret <= o1.position+5; ++fret) {
+//               // TODO This should not assume that both ChordFingerings have the same number of strings
+//               for (int string = 0; string < o1.absoluteFrets.length; ++string) {
+//                  boolean aHasNote = o1.absoluteFrets[string] == fret;
+//                  boolean bHasNote = o2.absoluteFrets[string] == fret;
+//
+//                  if (aHasNote && !bHasNote)
+//                     return -1;
+//                  if (bHasNote && !aHasNote)
+//                     return 1;
+//               }
+//            }
+//
+//            return 0;
+//         }
+//      });
+//   }
 }

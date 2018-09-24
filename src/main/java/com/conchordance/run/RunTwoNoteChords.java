@@ -58,7 +58,7 @@ public class RunTwoNoteChords {
       List<ChordFingering> chordFingerings = new RecursiveChordFingeringGenerator().getChordFingerings(fretboardModel);
 
       ChordListModel chords = new ChordListModel();
-      chords.setComparator(new ChordFingeringComparator.ShapeComparator());
+      chords.setComparator(new CustomComparator());
       chords.setChords(chordFingerings.toArray(new ChordFingering[chordFingerings.size()]));
 
       int chordNumber = 1;
@@ -79,12 +79,16 @@ public class RunTwoNoteChords {
 
             String chordName = name + chordType.name;
 
+            if (chordType.name == "fifth") {
+               chordName = IntervalChordName.getFifthIntervalChordName(noteName, modifier);
+            }
+
             if (chordType.name == "sixth") {
-               chordName = ChordName.getSixthChordName(noteName, modifier);
+               chordName = IntervalChordName.getSixthIntervalChordName(noteName, modifier);
             }
 
             if (chordType.name == "minorseventh") {
-               chordName = ChordName.getMinorSeventhChordName(noteName, modifier);
+               chordName = IntervalChordName.getMinorSeventhIntervalChordName(noteName, modifier);
             }
 
 //            if (chordNumber > 3) {

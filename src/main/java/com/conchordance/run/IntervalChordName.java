@@ -2,9 +2,73 @@ package com.conchordance.run;
 
 import com.conchordance.music.NoteName;
 
-public class ChordName {
+public class IntervalChordName {
 
-   public static String getSixthChordName(NoteName noteName, int modifier) {
+   public static String getFifthIntervalChordName(NoteName noteName, int modifier) {
+
+      if (noteName.toString().equals("C")) {
+
+         if (modifier == 0) {
+            return "Gmbb5";
+         } else {
+            return "G#mbb5";
+         }
+      }
+
+
+      if (noteName.toString().equals("D")) {
+
+         if (modifier == 0) {
+            return "Ambb5";
+         } else {
+            return "A#mbb5";
+         }
+      }
+
+
+      if (noteName.toString().equals("E")) {
+         return "Bmbb5";
+      }
+
+
+      if (noteName.toString().equals("F")) {
+
+         if (modifier == 0) {
+            return "Cmbb5";
+         } else {
+            return "C#mbb5";
+         }
+      }
+
+
+      if (noteName.toString().equals("G")) {
+
+         if (modifier == 0) {
+            return "Dmbb5";
+         } else {
+            return "D#mbb5";
+         }
+      }
+
+
+      if (noteName.toString().equals("A")) {
+
+         if (modifier == 0) {
+            return "Embb5";
+         } else {
+            return "Fmbb5";
+         }
+      }
+
+
+      if (noteName.toString().equals("B")) {
+         return "F#mbb5";
+      }
+
+      return null;
+   }
+
+   public static String getSixthIntervalChordName(NoteName noteName, int modifier) {
 
       if (noteName.toString().equals("C")) {
 
@@ -69,7 +133,7 @@ public class ChordName {
    }
 
 
-   public static String getMinorSeventhChordName(NoteName noteName, int modifier) {
+   public static String getMinorSeventhIntervalChordName(NoteName noteName, int modifier) {
 
       if (noteName.toString().equals("C")) {
 
