@@ -60,6 +60,7 @@ public class RunNormalChord {
       FretboardModel fretboardModel = new FretboardModel(Instrument.TELE, chord);
 
       List<ChordFingering> currentSetOfChords = getCurrentSetOfChords(fretboardModel);
+      Collections.sort(currentSetOfChords, new CustomComparator());
 //      sortChordsByFretPosition(currentSetOfChords);
 //      List<ChordFingering> curatedChords = getDeduplicatedSetOfChords(currentSetOfChords);
 

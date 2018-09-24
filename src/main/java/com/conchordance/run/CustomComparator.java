@@ -16,6 +16,12 @@ public class CustomComparator implements ChordFingeringComparator {
       else if (a.position > b.position)
          return 1;
 
+      if (Util.numberOfStringsPlayed(a.absoluteFrets) < Util.numberOfStringsPlayed(b.absoluteFrets)) {
+         return -1;
+      } else if (Util.numberOfStringsPlayed(a.absoluteFrets) > Util.numberOfStringsPlayed(b.absoluteFrets)) {
+         return 1;
+      }
+
       int i = a.sortedNotes.length - 1;
       int j = b.sortedNotes.length - 1;
 

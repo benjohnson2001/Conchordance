@@ -13,6 +13,7 @@ import com.conchordance.music.NoteName;
 import com.conchordance.run.chordcheckers.ChordChecker;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RunTwoNoteChords {
@@ -55,13 +56,42 @@ public class RunTwoNoteChords {
       Chord chord = new Chord(new Note(noteName, modifier), chordType);
       FretboardModel fretboardModel = new FretboardModel(Instrument.TELE, chord);
 
+      List<ChordFingering> currentSetOfChords = getCurrentSetOfChords(fretboardModel);
+      Collections.sort(currentSetOfChords, new CustomComparator());
+
+      String name = noteName.toString();
+      if (modifier == 1) {
+         name += "#";
+      }
+
+      String chordName = name + chordType.name;
+
+      if (chordType.name == "fifth") {
+         chordName = IntervalChordName.getFifthIntervalChordName(noteName, modifier);
+      }
+
+      if (chordType.name == "sixth") {
+         chordName = IntervalChordName.getSixthIntervalChordName(noteName, modifier);
+      }
+
+      if (chordType.name == "minorseventh") {
+         chordName = IntervalChordName.getMinorSeventhIntervalChordName(noteName, modifier);
+      }
+
+      for (int i = 0; i < currentSetOfChords.size(); i++) {
+         System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
+      }
+   }
+
+   private static List<ChordFingering> getCurrentSetOfChords(FretboardModel fretboardModel) {
+
+      List<ChordFingering> currentSetOfChords = new ArrayList<>();
+
       List<ChordFingering> chordFingerings = new RecursiveChordFingeringGenerator().getChordFingerings(fretboardModel);
 
       ChordListModel chords = new ChordListModel();
       chords.setComparator(new CustomComparator());
       chords.setChords(chordFingerings.toArray(new ChordFingering[chordFingerings.size()]));
-
-      int chordNumber = 1;
 
       for (int i = 0; i < chords.getSize(); i++) {
 
@@ -69,36 +99,13 @@ public class RunTwoNoteChords {
 
          if (
                Util.numberOfStringsPlayed(chordFingering.absoluteFrets) == 2 &&
-               ChordChecker.isNotChordWithOpenStringOutOfPlace(chordFingering.absoluteFrets) &&
-               thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(chordFingering.absoluteFrets)) {
+                     ChordChecker.isNotChordWithOpenStringOutOfPlace(chordFingering.absoluteFrets) &&
+                     thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(chordFingering.absoluteFrets)) {
 
-            String name = noteName.toString();
-            if (modifier == 1) {
-               name += "#";
-            }
-
-            String chordName = name + chordType.name;
-
-            if (chordType.name == "fifth") {
-               chordName = IntervalChordName.getFifthIntervalChordName(noteName, modifier);
-            }
-
-            if (chordType.name == "sixth") {
-               chordName = IntervalChordName.getSixthIntervalChordName(noteName, modifier);
-            }
-
-            if (chordType.name == "minorseventh") {
-               chordName = IntervalChordName.getMinorSeventhIntervalChordName(noteName, modifier);
-            }
-
-//            if (chordNumber > 3) {
-//               continue;
-//            }
-
-            System.out.println("[\"" + chordName + "\"," + chordNumber + "," + chordFingering + "],");
-            chordNumber++;
+            currentSetOfChords.add(chordFingering);
          }
       }
+      return currentSetOfChords;
    }
 
    private static boolean thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(int[] frets) {
