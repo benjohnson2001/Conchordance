@@ -1,5 +1,6 @@
 package com.conchordance.run;
 
+import com.conchordance.api.ExceptionResponse;
 import com.conchordance.fretted.FretboardModel;
 import com.conchordance.fretted.Instrument;
 import com.conchordance.fretted.fingering.ChordFingering;
@@ -11,14 +12,17 @@ import com.conchordance.music.ChordType;
 import com.conchordance.music.Note;
 import com.conchordance.music.NoteName;
 import com.conchordance.run.chordcheckers.ChordChecker;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class RunTwoNoteChords {
 
-   public static void main(String[] args) {
+   public static void main(String[] args) throws Exception {
 
       List<ChordType> chordTypes = new ArrayList<>();
       chordTypes.add(ChordType.OCTAVEINTERVAL);
@@ -32,10 +36,12 @@ public class RunTwoNoteChords {
       chordTypes.add(ChordType.MINORSEVENTHINTERVAL);
       chordTypes.add(ChordType.MAJORSEVENTHINTERVAL);
 
+      StringBuilder stringBuilder = new StringBuilder();
+
       for (NoteName noteName : NoteName.values()) {
 
          for (ChordType chordType : chordTypes) {
-            printChords(noteName, 0, chordType);
+            printChords(noteName, 0, chordType, stringBuilder);
          }
 
          if (noteName.toString().equals("C") ||
@@ -45,13 +51,15 @@ public class RunTwoNoteChords {
                noteName.toString().equals("A")) {
 
             for (ChordType chordType : chordTypes) {
-               printChords(noteName, 1, chordType);
+               printChords(noteName, 1, chordType, stringBuilder);
             }
          }
       }
+
+      FileUtils.writeStringToFile(new File("output/twoNoteChords.txt"), stringBuilder.toString(), Charset.forName("UTF-8"));
    }
 
-   private static void printChords(NoteName noteName, int modifier, ChordType chordType) {
+   private static void printChords(NoteName noteName, int modifier, ChordType chordType, StringBuilder stringBuilder) {
 
       Chord chord = new Chord(new Note(noteName, modifier), chordType);
       FretboardModel fretboardModel = new FretboardModel(Instrument.TELE, chord);
@@ -79,7 +87,9 @@ public class RunTwoNoteChords {
       }
 
       for (int i = 0; i < currentSetOfChords.size(); i++) {
-         System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
+         //System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
+         stringBuilder.append("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
+         stringBuilder.append("\n");
       }
    }
 
@@ -98,7 +108,7 @@ public class RunTwoNoteChords {
          ChordFingering chordFingering = chords.getElementAt(i);
 
          if (
-               Util.numberOfStringsPlayed(chordFingering.absoluteFrets) == 2 &&
+               //Util.numberOfStringsPlayed(chordFingering.absoluteFrets) == 2 &&
                      ChordChecker.isNotChordWithOpenStringOutOfPlace(chordFingering.absoluteFrets) &&
                      thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(chordFingering.absoluteFrets)) {
 

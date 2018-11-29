@@ -13,13 +13,16 @@ import com.conchordance.music.Note;
 import com.conchordance.music.NoteName;
 import com.conchordance.run.chordcheckers.ChordChecker;
 import com.conchordance.run.chordcheckers.ChordDuplicateChecker;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.nio.charset.Charset;
 import java.util.*;
 
 
 public class RunNormalChord {
 
-   public static void main(String[] args) {
+   public static void main(String[] args) throws Exception {
 
       List<ChordType> chordTypes = new ArrayList<>();
       chordTypes.add(ChordType.MAJOR);
@@ -35,10 +38,12 @@ public class RunNormalChord {
       chordTypes.add(ChordType.MAJORSEVENTH);
       chordTypes.add(ChordType.MINORSEVENTH);
 
+      StringBuilder stringBuilder = new StringBuilder();
+
       for (NoteName noteName : NoteName.values()) {
 
          for (ChordType chordType : chordTypes) {
-            printChords(noteName, 0, chordType);
+            printChords(noteName, 0, chordType, stringBuilder);
          }
 
          if (noteName.toString().equals("C") ||
@@ -48,13 +53,15 @@ public class RunNormalChord {
                noteName.toString().equals("A")) {
 
             for (ChordType chordType : chordTypes) {
-               printChords(noteName, 1, chordType);
+               printChords(noteName, 1, chordType, stringBuilder);
             }
          }
       }
+
+      FileUtils.writeStringToFile(new File("output/normalChords.txt"), stringBuilder.toString(), Charset.forName("UTF-8"));
    }
 
-   private static void printChords(NoteName noteName, int modifier, ChordType chordType) {
+   private static void printChords(NoteName noteName, int modifier, ChordType chordType, StringBuilder stringBuilder) {
 
       Chord chord = new Chord(new Note(noteName, modifier), chordType);
       FretboardModel fretboardModel = new FretboardModel(Instrument.TELE, chord);
@@ -71,17 +78,11 @@ public class RunNormalChord {
 
       String chordName = name + chordType.name;
 
-//      if (!chordName.equals("FM")) {
-//         return;
-//      }
-//
-//      if (currentSetOfChords.size() == 11) {
-//         System.out.println(chordName);
-//      }
-
       for (int i = 0; i < currentSetOfChords.size(); i++) {
-//      for (int i = 10; i < 11; i++) {
-         System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
+
+         stringBuilder.append("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
+         stringBuilder.append("\n");
+         //System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
       }
    }
 
