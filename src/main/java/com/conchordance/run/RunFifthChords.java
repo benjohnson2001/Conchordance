@@ -1,11 +1,9 @@
 package com.conchordance.run;
 
-import com.conchordance.api.ExceptionResponse;
 import com.conchordance.fretted.FretboardModel;
 import com.conchordance.fretted.Instrument;
 import com.conchordance.fretted.fingering.ChordFingering;
 import com.conchordance.fretted.fingering.RecursiveChordFingeringGenerator;
-import com.conchordance.fretted.fingering.list.ChordFingeringComparator;
 import com.conchordance.fretted.fingering.list.ChordListModel;
 import com.conchordance.music.Chord;
 import com.conchordance.music.ChordType;
@@ -20,21 +18,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RunTwoNoteChords {
+public class RunFifthChords {
 
    public static void main(String[] args) throws Exception {
 
       List<ChordType> chordTypes = new ArrayList<>();
-      chordTypes.add(ChordType.OCTAVEINTERVAL);
-      chordTypes.add(ChordType.SECONDINTERVAL);
-      chordTypes.add(ChordType.MINORTHIRDINTERVAL);
-      chordTypes.add(ChordType.MAJORTHIRDINTERVAL);
-      chordTypes.add(ChordType.FOURTHINTERVAL);
-//      chordTypes.add(ChordType.FLATFIFTHINTERVAL);
-//      chordTypes.add(ChordType.FIFTHINTERVAL);
-      chordTypes.add(ChordType.SIXTHINTERVAL);
-      chordTypes.add(ChordType.MINORSEVENTHINTERVAL);
-      chordTypes.add(ChordType.MAJORSEVENTHINTERVAL);
+      chordTypes.add(ChordType.FLATFIFTHINTERVAL);
+      chordTypes.add(ChordType.POWER);
 
       StringBuilder stringBuilder = new StringBuilder();
 
@@ -56,7 +46,7 @@ public class RunTwoNoteChords {
          }
       }
 
-      FileUtils.writeStringToFile(new File("output/teleTwoNoteChords.txt"), stringBuilder.toString(), Charset.forName("UTF-8"));
+      FileUtils.writeStringToFile(new File("output/teleFifthChords.txt"), stringBuilder.toString(), Charset.forName("UTF-8"));
    }
 
    private static void printChords(NoteName noteName, int modifier, ChordType chordType, StringBuilder stringBuilder) {
@@ -64,7 +54,12 @@ public class RunTwoNoteChords {
       Chord chord = new Chord(new Note(noteName, modifier), chordType);
       FretboardModel fretboardModel = new FretboardModel(Instrument.TELE, chord);
 
-      List<ChordFingering> currentSetOfChords = getCurrentSetOfChords(fretboardModel);
+      List<ChordFingering> currentSetOfChords = new ArrayList<>();
+      List<ChordFingering> normalChords = getNormalChords(fretboardModel);
+      List<ChordFingering> twoNoteChords = getTwoNoteChords(fretboardModel, chordType);
+      currentSetOfChords.addAll(normalChords);
+      currentSetOfChords.addAll(twoNoteChords);
+
       Collections.sort(currentSetOfChords, new CustomComparator());
 
       String name = noteName.toString();
@@ -93,7 +88,41 @@ public class RunTwoNoteChords {
       }
    }
 
-   private static List<ChordFingering> getCurrentSetOfChords(FretboardModel fretboardModel) {
+   private static List<ChordFingering> getNormalChords(FretboardModel fretboardModel) {
+
+      List<ChordFingering> chordFingerings = new RecursiveChordFingeringGenerator().getChordFingerings(fretboardModel);
+      ChordListModel chords = new ChordListModel();
+      chords.setComparator(new CustomComparator());
+      chords.setChords(chordFingerings.toArray(new ChordFingering[chordFingerings.size()]));
+
+      List<ChordFingering> currentSetOfChords = new ArrayList<>();
+
+      int minNumberOfStringsPlayed = 3;
+      int maxNumberOfStringsPlayed = 6;
+
+      for (int i = minNumberOfStringsPlayed; i < maxNumberOfStringsPlayed+1; i++) {
+
+         for (int j = 0; j < chords.getSize(); j++) {
+
+            ChordFingering chordFingering = chords.getElementAt(j);
+
+            int[] frets = chordFingering.absoluteFrets;
+
+            if (
+                  Util.numberOfStringsPlayed(frets) == i &&
+                        ChordChecker.isNotBrokenSetChord(frets) &&
+                        ChordChecker.isNotChordWithOpenStringOutOfPlace(frets)
+                  ) {
+
+               currentSetOfChords.add(chordFingering);
+            }
+         }
+      }
+
+      return currentSetOfChords;
+   }
+
+   private static List<ChordFingering> getTwoNoteChords(FretboardModel fretboardModel, ChordType chordType) {
 
       List<ChordFingering> currentSetOfChords = new ArrayList<>();
 

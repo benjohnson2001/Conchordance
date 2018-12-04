@@ -27,7 +27,8 @@ public class RunNormalChord {
       List<ChordType> chordTypes = new ArrayList<>();
       chordTypes.add(ChordType.MAJOR);
       chordTypes.add(ChordType.MINOR);
-      chordTypes.add(ChordType.POWER);
+//      chordTypes.add(ChordType.POWER);
+//      chordTypes.add(ChordType.FLATFIFTHINTERVAL);
       chordTypes.add(ChordType.SUS2);
       chordTypes.add(ChordType.SUS4);
       chordTypes.add(ChordType.DIM);
@@ -64,7 +65,7 @@ public class RunNormalChord {
    private static void printChords(NoteName noteName, int modifier, ChordType chordType, StringBuilder stringBuilder) {
 
       Chord chord = new Chord(new Note(noteName, modifier), chordType);
-      FretboardModel fretboardModel = new FretboardModel(Instrument.TELE, chord);
+      FretboardModel fretboardModel = new FretboardModel(Instrument.SHORTGUITAR, chord);
 
       List<ChordFingering> currentSetOfChords = getCurrentSetOfChords(fretboardModel);
       Collections.sort(currentSetOfChords, new CustomComparator());

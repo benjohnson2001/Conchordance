@@ -17,6 +17,10 @@ public class Instrument {
 			new Note[] {new Note(E, 0, 5), new Note(B, 0, 4), new Note(G, 0, 4), new Note(D, 0, 4), new Note(A, 0, 3), new Note(E, 0, 3)});
 
 
+	public static final Instrument SHORTGUITAR = new Instrument("Guitar", 16, Clef.TREBLE,
+			new Note[] { new Note(E, 0, 3),  new Note(A, 0, 3), new Note(D, 0, 4), new Note(G, 0, 4), new Note(B, 0, 4), new Note(E, 0, 5) });
+
+
 	public static final Instrument TELE = new Instrument("Guitar", 18, Clef.TREBLE,
 			new Note[] { new Note(E, 0, 3),  new Note(A, 0, 3), new Note(D, 0, 4), new Note(G, 0, 4), new Note(B, 0, 4), new Note(E, 0, 5) });
 
