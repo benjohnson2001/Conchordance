@@ -206,7 +206,7 @@ public class RecursiveChordFingeringGenerator implements ChordFingeringGenerator
 
    private void rCalcFingerings(ChordFingering current, int firstAvailableFinger, ArrayList<StringFret> options, ArrayList<ChordFingering> chordFingerings) {
 
-      firstAvailableFinger = 1;
+      //firstAvailableFinger = 1;
 
       if (validator.validate(current, chord))
          chordFingerings.add(current);

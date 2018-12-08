@@ -65,7 +65,7 @@ public class RunNormalChord {
    private static void printChords(NoteName noteName, int modifier, ChordType chordType, StringBuilder stringBuilder) {
 
       Chord chord = new Chord(new Note(noteName, modifier), chordType);
-      FretboardModel fretboardModel = new FretboardModel(Instrument.SHORTGUITAR, chord);
+      FretboardModel fretboardModel = new FretboardModel(Instrument.TELE, chord);
 
       List<ChordFingering> currentSetOfChords = getCurrentSetOfChords(fretboardModel);
       Collections.sort(currentSetOfChords, new CustomComparator());
