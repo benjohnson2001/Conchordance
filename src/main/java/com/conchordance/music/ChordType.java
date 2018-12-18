@@ -10,9 +10,9 @@ package com.conchordance.music;
 public class ChordType {
 	
 	public static final ChordType OCTAVEINTERVAL = new ChordType("M13", new Interval[]{Interval.UNISON});
-	public static final ChordType SECONDINTERVAL = new ChordType("M7sus2", new Interval[]{Interval.UNISON, Interval.SECOND});
-	public static final ChordType MINORTHIRDINTERVAL = new ChordType("maddb9", new Interval[]{Interval.UNISON, Interval.MINOR_THIRD});
-	public static final ChordType MAJORTHIRDINTERVAL = new ChordType("Maddb9", new Interval[]{Interval.UNISON, Interval.MAJOR_THIRD});
+	public static final ChordType SECONDINTERVAL = new ChordType("sus2", new Interval[]{Interval.UNISON, Interval.SECOND});
+	public static final ChordType MINORTHIRDINTERVAL = new ChordType("m", new Interval[]{Interval.UNISON, Interval.MINOR_THIRD});
+	public static final ChordType MAJORTHIRDINTERVAL = new ChordType("M", new Interval[]{Interval.UNISON, Interval.MAJOR_THIRD});
 	public static final ChordType FOURTHINTERVAL = new ChordType("M7sus4", new Interval[]{Interval.UNISON, Interval.FOURTH});
 	public static final ChordType FLATFIFTHINTERVAL = new ChordType("5-", new Interval[]{Interval.UNISON, Interval.DIMINISHED_FIFTH});
 	public static final ChordType FIFTHINTERVAL = new ChordType("fifth", new Interval[]{Interval.UNISON, Interval.PERFECT_FIFTH});

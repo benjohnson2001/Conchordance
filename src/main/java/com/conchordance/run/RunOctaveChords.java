@@ -1,11 +1,9 @@
 package com.conchordance.run;
 
-import com.conchordance.api.ExceptionResponse;
 import com.conchordance.fretted.FretboardModel;
 import com.conchordance.fretted.Instrument;
 import com.conchordance.fretted.fingering.ChordFingering;
 import com.conchordance.fretted.fingering.RecursiveChordFingeringGenerator;
-import com.conchordance.fretted.fingering.list.ChordFingeringComparator;
 import com.conchordance.fretted.fingering.list.ChordListModel;
 import com.conchordance.music.Chord;
 import com.conchordance.music.ChordType;
@@ -20,21 +18,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RunTwoNoteChords {
+public class RunOctaveChords {
 
    public static void main(String[] args) throws Exception {
 
       List<ChordType> chordTypes = new ArrayList<>();
       chordTypes.add(ChordType.OCTAVEINTERVAL);
-      chordTypes.add(ChordType.SECONDINTERVAL);
-      chordTypes.add(ChordType.MINORTHIRDINTERVAL);
-      chordTypes.add(ChordType.MAJORTHIRDINTERVAL);
-      chordTypes.add(ChordType.FOURTHINTERVAL);
-//      chordTypes.add(ChordType.FLATFIFTHINTERVAL);
-//      chordTypes.add(ChordType.FIFTHINTERVAL);
-      chordTypes.add(ChordType.SIXTHINTERVAL);
-      chordTypes.add(ChordType.MINORSEVENTHINTERVAL);
-      chordTypes.add(ChordType.MAJORSEVENTHINTERVAL);
 
       StringBuilder stringBuilder = new StringBuilder();
 
@@ -56,7 +45,7 @@ public class RunTwoNoteChords {
          }
       }
 
-      FileUtils.writeStringToFile(new File("output/teleTwoNoteChords.txt"), stringBuilder.toString(), Charset.forName("UTF-8"));
+      FileUtils.writeStringToFile(new File("output/octaveChords.txt"), stringBuilder.toString(), Charset.forName("UTF-8"));
    }
 
    private static void printChords(NoteName noteName, int modifier, ChordType chordType, StringBuilder stringBuilder) {
@@ -74,20 +63,7 @@ public class RunTwoNoteChords {
 
       String chordName = name + chordType.name;
 
-      if (chordType.name.equals("fifth")) {
-         chordName = IntervalChordName.getFifthIntervalChordName(noteName, modifier);
-      }
-
-      if (chordType.name.equals("sixth")) {
-         chordName = IntervalChordName.getSixthIntervalChordName(noteName, modifier);
-      }
-
-      if (chordType.name.equals("minorseventh")) {
-         chordName = IntervalChordName.getMinorSeventhIntervalChordName(noteName, modifier);
-      }
-
       for (int i = 0; i < currentSetOfChords.size(); i++) {
-         //System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
          stringBuilder.append("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
          stringBuilder.append("\n");
       }

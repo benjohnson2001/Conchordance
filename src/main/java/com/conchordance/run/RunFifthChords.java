@@ -46,7 +46,7 @@ public class RunFifthChords {
          }
       }
 
-      FileUtils.writeStringToFile(new File("output/teleFifthChords.txt"), stringBuilder.toString(), Charset.forName("UTF-8"));
+      FileUtils.writeStringToFile(new File("output/fifthChords.txt"), stringBuilder.toString(), Charset.forName("UTF-8"));
    }
 
    private static void printChords(NoteName noteName, int modifier, ChordType chordType, StringBuilder stringBuilder) {
@@ -68,18 +68,6 @@ public class RunFifthChords {
       }
 
       String chordName = name + chordType.name;
-
-      if (chordType.name.equals("fifth")) {
-         chordName = IntervalChordName.getFifthIntervalChordName(noteName, modifier);
-      }
-
-      if (chordType.name.equals("sixth")) {
-         chordName = IntervalChordName.getSixthIntervalChordName(noteName, modifier);
-      }
-
-      if (chordType.name.equals("minorseventh")) {
-         chordName = IntervalChordName.getMinorSeventhIntervalChordName(noteName, modifier);
-      }
 
       for (int i = 0; i < currentSetOfChords.size(); i++) {
          //System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");

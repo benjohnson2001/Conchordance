@@ -25,16 +25,22 @@ public class RunNormalChord {
    public static void main(String[] args) throws Exception {
 
       List<ChordType> chordTypes = new ArrayList<>();
-      chordTypes.add(ChordType.MAJOR);
-      chordTypes.add(ChordType.MINOR);
-//      chordTypes.add(ChordType.POWER);
-//      chordTypes.add(ChordType.FLATFIFTHINTERVAL);
+
       chordTypes.add(ChordType.SUS2);
+         chordTypes.add(ChordType.SECONDINTERVAL);
+
+      chordTypes.add(ChordType.MINOR);
+         chordTypes.add(ChordType.MINORTHIRDINTERVAL);
+
+      chordTypes.add(ChordType.MAJOR);
+         chordTypes.add(ChordType.MAJORTHIRDINTERVAL);
+
+
       chordTypes.add(ChordType.SUS4);
       chordTypes.add(ChordType.DIM);
       chordTypes.add(ChordType.AUG);
-      chordTypes.add(ChordType.MAJORSIXTH);
       chordTypes.add(ChordType.MINORSIXTH);
+      chordTypes.add(ChordType.MAJORSIXTH);
       chordTypes.add(ChordType.DOMINANTSEVENTH);
       chordTypes.add(ChordType.MAJORSEVENTH);
       chordTypes.add(ChordType.MINORSEVENTH);
@@ -62,12 +68,44 @@ public class RunNormalChord {
       FileUtils.writeStringToFile(new File("output/normalChords.txt"), stringBuilder.toString(), Charset.forName("UTF-8"));
    }
 
+   private static List<ChordFingering> getAdditionalChords(NoteName noteName, int modifier, ChordType chordType, Instrument instrument) {
+
+      List<ChordFingering> additionalChords = new ArrayList<>();
+
+      ChordType additionalChordType = null;
+
+      if (chordType.name.equals("sus2")) {
+         additionalChordType = ChordType.SECONDINTERVAL;
+      }
+
+      if (chordType.name.equals("m")) {
+         additionalChordType = ChordType.MINORTHIRDINTERVAL;
+      }
+
+      if (chordType.name.equals("M")) {
+         additionalChordType = ChordType.MAJORTHIRDINTERVAL;
+      }
+
+      if (additionalChordType != null) {
+         Chord additionalChord = new Chord(new Note(noteName, modifier), additionalChordType);
+         FretboardModel additionalFretboardModel = new FretboardModel(instrument, additionalChord);
+         additionalChords = getCurrentSetOfDyadChords(additionalFretboardModel);
+      }
+
+      return additionalChords;
+   }
+
    private static void printChords(NoteName noteName, int modifier, ChordType chordType, StringBuilder stringBuilder) {
 
-      Chord chord = new Chord(new Note(noteName, modifier), chordType);
-      FretboardModel fretboardModel = new FretboardModel(Instrument.TELE, chord);
+      Instrument instrument = Instrument.TELE;
 
+      Chord chord = new Chord(new Note(noteName, modifier), chordType);
+      FretboardModel fretboardModel = new FretboardModel(instrument, chord);
       List<ChordFingering> currentSetOfChords = getCurrentSetOfChords(fretboardModel);
+      List<ChordFingering> additionalChords = getAdditionalChords(noteName, modifier, chordType, instrument);
+      currentSetOfChords.addAll(additionalChords);
+
+
       Collections.sort(currentSetOfChords, new CustomComparator());
 //      sortChordsByFretPosition(currentSetOfChords);
 //      List<ChordFingering> curatedChords = getDeduplicatedSetOfChords(currentSetOfChords);
@@ -83,7 +121,6 @@ public class RunNormalChord {
 
          stringBuilder.append("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
          stringBuilder.append("\n");
-         //System.out.println("[\"" + chordName + "\"," + (i + 1) + "," + currentSetOfChords.get(i) + "],");
       }
    }
 
@@ -118,7 +155,57 @@ public class RunNormalChord {
          }
       }
 
+
       return currentSetOfChords;
+   }
+
+
+   private static List<ChordFingering> getCurrentSetOfDyadChords(FretboardModel fretboardModel) {
+
+      List<ChordFingering> currentSetOfChords = new ArrayList<>();
+
+      List<ChordFingering> chordFingerings = new RecursiveChordFingeringGenerator().getChordFingerings(fretboardModel);
+
+      ChordListModel chords = new ChordListModel();
+      chords.setComparator(new CustomComparator());
+      chords.setChords(chordFingerings.toArray(new ChordFingering[chordFingerings.size()]));
+
+      for (int i = 0; i < chords.getSize(); i++) {
+
+         ChordFingering chordFingering = chords.getElementAt(i);
+
+         if (
+               Util.numberOfStringsPlayed(chordFingering.absoluteFrets) == 2 &&
+                     ChordChecker.isNotChordWithOpenStringOutOfPlace(chordFingering.absoluteFrets) &&
+                     thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(chordFingering.absoluteFrets)) {
+
+            currentSetOfChords.add(chordFingering);
+         }
+      }
+      return currentSetOfChords;
+   }
+
+
+   private static boolean thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(int[] frets) {
+
+      int numberOfUnplayedStrings = 0;
+      int numberOfPlayedStrings = 0;
+
+      for (int i = 0; i < frets.length; i++) {
+
+         if (numberOfPlayedStrings > 0 && numberOfUnplayedStrings > 2) {
+            return false;
+         }
+
+         if (frets[i] == -1) {
+            numberOfUnplayedStrings++;
+         } else {
+            numberOfPlayedStrings++;
+            numberOfUnplayedStrings = 0;
+         }
+      }
+
+      return true;
    }
 
 //   private static List<ChordFingering> getDeduplicatedSetOfChords(List<ChordFingering> currentSetOfChords) {
