@@ -56,9 +56,9 @@ public class RunFifthChords {
 
       List<ChordFingering> currentSetOfChords = new ArrayList<>();
       List<ChordFingering> normalChords = getNormalChords(fretboardModel);
-      List<ChordFingering> twoNoteChords = getTwoNoteChords(fretboardModel, chordType);
+      // List<ChordFingering> twoNoteChords = getTwoNoteChords(fretboardModel, chordType);
       currentSetOfChords.addAll(normalChords);
-      currentSetOfChords.addAll(twoNoteChords);
+      // currentSetOfChords.addAll(twoNoteChords);
 
       Collections.sort(currentSetOfChords, new CustomComparator());
 
@@ -99,7 +99,8 @@ public class RunFifthChords {
             if (
                   Util.numberOfStringsPlayed(frets) == i &&
                         ChordChecker.isNotBrokenSetChord(frets) &&
-                        ChordChecker.isNotChordWithOpenStringOutOfPlace(frets)
+                        ChordChecker.isNotChordWithOpenStringOutOfPlace(frets) &&
+                        ChordChecker.theLastTwoStringsAreNotPlayed(frets)
                   ) {
 
                currentSetOfChords.add(chordFingering);
@@ -127,7 +128,8 @@ public class RunFifthChords {
          if (
                Util.numberOfStringsPlayed(chordFingering.absoluteFrets) == 2 &&
                ChordChecker.isNotChordWithOpenStringOutOfPlace(chordFingering.absoluteFrets) &&
-                     thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(chordFingering.absoluteFrets)) {
+                     thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(chordFingering.absoluteFrets) &&
+                     ChordChecker.theLastTwoStringsAreNotPlayed(chordFingering.absoluteFrets)) {
 
             currentSetOfChords.add(chordFingering);
          }

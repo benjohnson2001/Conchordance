@@ -4,15 +4,12 @@ import com.conchordance.fretted.FretboardModel;
 import com.conchordance.fretted.Instrument;
 import com.conchordance.fretted.fingering.ChordFingering;
 import com.conchordance.fretted.fingering.RecursiveChordFingeringGenerator;
-import com.conchordance.fretted.fingering.list.ChordFingeringComparator;
 import com.conchordance.fretted.fingering.list.ChordListModel;
-import com.conchordance.fretted.fingering.validation.StrummableValidator;
 import com.conchordance.music.Chord;
 import com.conchordance.music.ChordType;
 import com.conchordance.music.Note;
 import com.conchordance.music.NoteName;
 import com.conchordance.run.chordcheckers.ChordChecker;
-import com.conchordance.run.chordcheckers.ChordDuplicateChecker;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -102,8 +99,8 @@ public class RunNormalChord {
       Chord chord = new Chord(new Note(noteName, modifier), chordType);
       FretboardModel fretboardModel = new FretboardModel(instrument, chord);
       List<ChordFingering> currentSetOfChords = getCurrentSetOfChords(fretboardModel);
-      List<ChordFingering> additionalChords = getAdditionalChords(noteName, modifier, chordType, instrument);
-      currentSetOfChords.addAll(additionalChords);
+      // List<ChordFingering> additionalChords = getAdditionalChords(noteName, modifier, chordType, instrument);
+      // currentSetOfChords.addAll(additionalChords);
 
 
       Collections.sort(currentSetOfChords, new CustomComparator());
@@ -147,7 +144,8 @@ public class RunNormalChord {
             if (
                   Util.numberOfStringsPlayed(frets) == i &&
                         ChordChecker.isNotBrokenSetChord(frets) &&
-                        ChordChecker.isNotChordWithOpenStringOutOfPlace(frets)
+                        ChordChecker.isNotChordWithOpenStringOutOfPlace(frets) &&
+                        ChordChecker.theLastTwoStringsAreNotPlayed(frets)
                   ) {
 
                currentSetOfChords.add(chordFingering);
@@ -177,7 +175,8 @@ public class RunNormalChord {
          if (
                Util.numberOfStringsPlayed(chordFingering.absoluteFrets) == 2 &&
                      ChordChecker.isNotChordWithOpenStringOutOfPlace(chordFingering.absoluteFrets) &&
-                     thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(chordFingering.absoluteFrets)) {
+                     thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(chordFingering.absoluteFrets) &&
+                     ChordChecker.theLastTwoStringsAreNotPlayed(chordFingering.absoluteFrets)) {
 
             currentSetOfChords.add(chordFingering);
          }

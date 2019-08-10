@@ -86,7 +86,8 @@ public class RunOctaveChords {
          if (
                Util.numberOfStringsPlayed(chordFingering.absoluteFrets) == 2 &&
                ChordChecker.isNotChordWithOpenStringOutOfPlace(chordFingering.absoluteFrets) &&
-                     thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(chordFingering.absoluteFrets)) {
+                     thereAreNotMoreThanTwoUnplayedStringsBetweenNotes(chordFingering.absoluteFrets) &&
+                     ChordChecker.theLastTwoStringsAreNotPlayed(chordFingering.absoluteFrets)) {
 
             currentSetOfChords.add(chordFingering);
          }

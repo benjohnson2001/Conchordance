@@ -88,4 +88,30 @@ public class ChordChecker {
 
       return false;
    }
+
+   public static boolean theFirstTwoStringsAreNotPlayed(int[] frets) {
+
+      if (frets[0] != -1) {
+         return false;
+      }
+
+      if (frets[1] != -1) {
+         return false;
+      }
+
+      return true;
+   }
+
+   public static boolean theLastTwoStringsAreNotPlayed(int[] frets) {
+
+      if (frets[4] != -1) {
+         return false;
+      }
+
+      if (frets[5] != -1) {
+         return false;
+      }
+
+      return true;
+   }
 }
